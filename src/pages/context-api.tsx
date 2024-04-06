@@ -8,47 +8,59 @@
  */
 
 import styles from '@/styles/context-api.module.css';
-import { IToastMessage } from '@/types/toast-message';
 import { ToastMessage } from '@/components/ToastMessage';
+import { ToastProvider, useToast } from '@/contexts/ToastContext';
 
 export default function ContextApi() {
-	const messages: Array<IToastMessage> = [
-		{
-			id: '1',
-			message: 'Mensagem de sucesso',
-			type: 'success',
-		},
-		{
-			id: '2',
-			message: 'Mensagem de erro',
-			type: 'error',
-		},
-	];
+	return (
+		<ToastProvider>
+			<Buttons />
+			<ToastContainer />
+		</ToastProvider>
+	);
+}
+
+function Buttons() {
+	const { addMessage } = useToast();
 
 	function handleSuccessButtonClick() {
-		alert('Method: handleSuccessButtonClick not implemented');
+		addMessage({
+			id: Date.now().toString(),
+			message: 'Mensagem de sucesso',
+			type: 'success',
+			duration: 4000,
+		});
 	}
 
 	function handleErrorButtonClick() {
-		alert('Method: handleErrorButtonClick not implemented');
+		addMessage({
+			id: Date.now().toString(),
+			message: 'Mensagem de erro',
+			type: 'error',
+			duration: 4000,
+		});
 	}
 
 	return (
-		<>
-			<div className={styles.container}>
-				<button type="button" onClick={handleSuccessButtonClick}>
-					Disparar mensagem de sucesso
-				</button>
-				<button type="button" onClick={handleErrorButtonClick}>
-					Disparar mensagem de erro
-				</button>
-			</div>
+		<div className={styles.container}>
+			<button type="button" onClick={handleSuccessButtonClick}>
+				Disparar mensagem de sucesso
+			</button>
+			<button type="button" onClick={handleErrorButtonClick}>
+				Disparar mensagem de erro
+			</button>
+		</div>
+	);
+}
 
-			<div className={styles['toast-container']}>
-				{messages.map((message) => (
-					<ToastMessage key={message.id} content={message} />
-				))}
-			</div>
-		</>
+function ToastContainer() {
+	const { messages } = useToast();
+
+	return (
+		<div className={styles['toast-container']}>
+			{messages.map((message) => (
+				<ToastMessage key={message.id} content={message} />
+			))}
+		</div>
 	);
 }

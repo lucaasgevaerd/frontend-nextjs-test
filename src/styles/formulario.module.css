@@ -30,3 +30,8 @@
 	width: 50%;
 	margin-left: auto;
 }
+
+.content form p {
+	margin: 0;
+	color: red;
+}

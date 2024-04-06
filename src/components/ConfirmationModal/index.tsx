@@ -1,6 +1,6 @@
 import styles from './style.module.css';
 
-type ModalProps = {
+type ConfirmationModalProps = {
 	children: React.ReactNode;
 	title: string;
 	isOpen: boolean;
@@ -13,13 +13,7 @@ type ModalProps = {
 	};
 };
 
-/* 
-	Modal
-
-	- Ao clicar no wrapper do modal, o modal deve ser fechado, porém esta ação deve ser ignorada caso o usuário clique em qualquer elemento dentro do modal
-*/
-
-export const Modal: React.FC<ModalProps> = ({ children, title, isOpen, ...props }) => {
+export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ children, title, isOpen, ...props }) => {
 	function handleCloseClick(e: React.MouseEvent) {
 		props.onClose?.('click', e.target);
 	}
